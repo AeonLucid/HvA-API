@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using HvA.API.NetStandard1;
 using HvA.API.NetStandard1.Data;
+using HvA_API.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace HvA_API.Controllers
 {
@@ -10,24 +12,21 @@ namespace HvA_API.Controllers
     public class GroupsController : Controller
     {
         private readonly HvAClient _client;
-        private readonly ILogger<GroupsController> _logger;
+        private readonly IMemoryCache _memoryCache;
 
-        public GroupsController(HvAClient client, ILogger<GroupsController> logger)
+        public GroupsController(HvAClient client, IMemoryCache memoryCache)
         {
             _client = client;
-            _logger = logger;
+            _memoryCache = memoryCache;
         }
 
         [HttpGet]
         [Route("search/{filter}")]
-        [ResponseCache(Duration = 60)]
         public async Task<Schedule[]> Search(string filter)
         {
-            var result = await _client.GetSchedulesAsync(filter);
+            var cacheKey = $"GroupsController-Search-{filter}";
 
-            _logger.LogWarning("Hi test");
-
-            return result;
+            return await _memoryCache.GetValueAsync(cacheKey, async () => await _client.GetSchedulesAsync(filter), TimeSpan.FromMinutes(1));
         }
     }
 }

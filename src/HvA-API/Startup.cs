@@ -38,6 +38,7 @@ namespace HvA_API
             if (!hva.SignInAsync().Result)
                 throw new Exception("Wrong HvA credentials specified, couldn't authenticate.");
 
+            services.AddMemoryCache();
             services.AddSingleton(hva);
             services.AddMvc();
         }
