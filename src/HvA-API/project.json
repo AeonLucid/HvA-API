@@ -50,7 +50,8 @@
       "Areas/**/Views",
       "appsettings.json",
       "appsettings.Production.json",
-      "web.config"
+      "web.config",
+      "nlog.config"
     ]
   },
 
