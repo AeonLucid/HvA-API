@@ -26,7 +26,7 @@ namespace HvA_API.Controllers
         {
             var cacheKey = $"GroupsController-Search-{filter}";
 
-            return await _memoryCache.GetValueAsync(cacheKey, async () => await _client.GetSchedulesAsync(filter), TimeSpan.FromMinutes(1));
+            return await _memoryCache.GetValueAsync(cacheKey, async () => await _client.GetSchedulesAsync(filter), TimeSpan.FromMinutes(5));
         }
     }
 }
