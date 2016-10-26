@@ -23,7 +23,7 @@ namespace HvA_API
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
-            LogManager.Configuration = new XmlLoggingConfiguration(Path.Combine(Directory.GetCurrentDirectory(), "nlog.config"));
+            LogManager.Configuration = new XmlLoggingConfiguration(Path.Combine(Directory.GetCurrentDirectory(), $"nlog.{env.EnvironmentName}.config"));
         }
 
         public IConfigurationRoot Configuration { get; }
