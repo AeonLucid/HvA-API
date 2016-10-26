@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using HvA.API.NetStandard1;
 using NLog.Extensions.Logging;
 using Microsoft.AspNetCore.Builder;
@@ -6,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Config;
 
 namespace HvA_API
 {
@@ -20,6 +23,7 @@ namespace HvA_API
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
+            LogManager.Configuration = new XmlLoggingConfiguration(Path.Combine(Directory.GetCurrentDirectory(), "nlog.config"));
         }
 
         public IConfigurationRoot Configuration { get; }
