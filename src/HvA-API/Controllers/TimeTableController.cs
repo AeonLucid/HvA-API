@@ -20,6 +20,7 @@ namespace HvA_API.Controllers
             _memoryCache = memoryCache;
         }
 
+        // TODO: Year
         [HttpGet]
         [Route("{studentId}/{weekNumber:int}")]
         public async Task<TimetableItem[]> GetTimeTableWeek(string studentId, int weekNumber)
